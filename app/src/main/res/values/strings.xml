@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">GetAJobDone</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+
+    <string name="please_provide_service_details">Please provide service \ndetails</string>
+    <string name="service_type">Service Type</string>
+    <string name="add_your_service">Add your Service</string>
+    <string name="service_price">Service Price</string>
+    <string name="service_description">Service description</string>
+    <string name="add_service">Add Service</string>
+    <string name="this_is_user_name">This is User Name</string>
+    <string name="this_is_user_email">This is User email</string>
+    <string name="this_is_business_name">This is business name</string>
+    <string name="this_is_service_type">This is service Type</string>
+    <string name="this_is_service_price">This is service Price</string>
+    <string name="activate">Activate</string>
+    <string name="deactivate">Deactivate</string>
+</resources>

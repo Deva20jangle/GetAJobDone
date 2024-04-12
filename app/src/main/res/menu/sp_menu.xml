@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/addService"
+        android:icon="@drawable/baseline_add"
+        android:iconTint="@color/colorPrimary"
+        android:title="Add Service"/>
+
+    <item android:id="@+id/blank"
+        android:title=" "/>
+
+    <item android:id="@+id/settingsSP"
+        android:icon="@drawable/baseline_update"
+        android:iconTint="@color/colorPrimary"
+        android:title="Update Profile"/>
+
+    <item android:id="@+id/logoutSP"
+        android:icon="@drawable/ic_logout"
+        android:iconTint="@color/colorPrimary"
+        android:title="Log Out"/>
+
+</menu>

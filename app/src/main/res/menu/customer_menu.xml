@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/orderedServices"
+        android:icon="@drawable/checkorders"
+        android:iconTint="@color/colorPrimary"
+        android:title="Check orders"/>
+
+    <item android:id="@+id/fileComplaint"
+        android:icon="@drawable/complaint"
+        android:iconTint="@color/colorPrimary"
+        android:title="File Complaint"/>
+
+    <item android:id="@+id/blank"
+        android:title=" "/>
+
+    <item android:id="@+id/settingsCustomer"
+        android:icon="@drawable/baseline_update"
+        android:iconTint="@color/colorPrimary"
+        android:title="Update Profile"/>
+
+    <item android:id="@+id/logoutCustomer"
+        android:icon="@drawable/ic_logout"
+        android:iconTint="@color/colorPrimary"
+        android:title="Log Out"/>
+
+</menu>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    android:elevation="5dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/logo"
+            android:layout_centerVertical="true"
+            android:id="@+id/img1"
+            app:civ_border_width="2dp"
+            app:civ_border_color="#FF000000"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtUserNameRow"
+            android:text="This is User Name"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="#000"
+            android:padding="2dp"
+            android:layout_toRightOf="@id/img1"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtUserEmailRow"
+            android:text="This is User email"
+            android:textSize="15sp"
+            android:textColor="#000"
+            android:padding="2dp"
+            android:layout_toRightOf="@id/img1"
+            android:layout_below="@id/txtUserNameRow"
+            android:layout_marginLeft="10dp"/>
+
+        <Button
+            android:id="@+id/btnDeactivateUserRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Deactivate User"
+            android:layout_below="@id/txtUserEmailRow"
+            android:layout_toRightOf="@id/img1"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:backgroundTint="@color/red"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/btnActivateUserRow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Activate User"
+            android:layout_below="@id/txtUserEmailRow"
+            android:layout_toRightOf="@id/img1"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="20dp"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/green"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

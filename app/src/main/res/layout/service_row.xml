@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    android:elevation="5dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtBusinessNameRow"
+            android:text="@string/this_is_business_name"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:padding="2dp"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtServiceTypeRow"
+            android:text="@string/this_is_service_type"
+            android:textSize="15sp"
+            android:textColor="#000"
+            android:padding="2dp"
+            android:layout_below="@id/txtBusinessNameRow"
+            android:layout_marginStart="10dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/txtServiceTypeRow">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtServicePriceRow"
+                android:text="@string/this_is_service_price"
+                android:textSize="15sp"
+                android:textColor="#000"
+                android:padding="2dp"
+                android:layout_marginStart="10dp"/>
+
+            <TextView
+                android:id="@+id/txtRating"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="2dp"
+                android:text="3.5"
+                android:textColor="#000"
+                android:textSize="15sp"
+                android:layout_marginLeft="50dp"
+                android:drawableLeft="@drawable/rating"
+                android:drawablePadding="5dp"/>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

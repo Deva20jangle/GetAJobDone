@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "542501134353",
+    "project_id": "getajobdone-c3c86",
+    "storage_bucket": "getajobdone-c3c86.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542501134353:android:5664e4b961940916c691b0",
+        "android_client_info": {
+          "package_name": "com.example.getajobdone"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJwY3xRSzkplLNPKEhccQPDQ0nSHGe14U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

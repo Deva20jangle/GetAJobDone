@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/checkComplaints"
+        android:icon="@drawable/sad"
+        android:iconTint="@color/colorPrimary"
+        android:title="Check complaints"/>
+
+    <item android:id="@+id/logoutAdmin"
+        android:icon="@drawable/ic_logout"
+        android:iconTint="@color/colorPrimary"
+        android:title="Log Out"/>
+
+</menu>

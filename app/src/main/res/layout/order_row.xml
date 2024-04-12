@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="5dp"
+    android:elevation="5dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtCustomerNameOrderRow"
+            android:text="Customer Name order row"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:padding="2dp"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtOrderDate"
+            android:text="Order Date"
+            android:textSize="15sp"
+            android:textColor="#000"
+            android:padding="2dp"
+            android:layout_below="@id/txtCustomerNameOrderRow"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtOrderServiceType"
+            android:text="Order service type"
+            android:textSize="15sp"
+            android:textColor="#000"
+            android:padding="2dp"
+            android:layout_below="@id/txtOrderDate"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtOrderStatus"
+            android:text="Order status"
+            android:textSize="15sp"
+            android:textColor="#000"
+            android:padding="2dp"
+            android:layout_below="@id/txtOrderServiceType"
+            android:layout_marginStart="10dp"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
