@@ -235,7 +235,7 @@
                 android:id="@+id/txtBusinessName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Service Provider ID:"
+                android:text="Business Name:"
                 android:textColor="@color/white"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
@@ -307,7 +307,7 @@
                 android:id="@+id/txtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Service Provider ID:"
+                android:text="Password:"
                 android:textColor="@color/white"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
@@ -319,37 +319,67 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edAddress"/>
 
-            <EditText
-                android:id="@+id/edPassword"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/input_bg_reg"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Password"
-                android:inputType="textPassword"
-                android:padding="12dp"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:passwordToggleEnabled="true"
                 app:layout_constraintTop_toBottomOf="@+id/txtPassword"
-                tools:ignore="TouchTargetSizeCheck" />
+                app:passwordToggleTint="@color/white">
+
+                <EditText
+                    android:id="@+id/edPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/input_bg_reg"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:padding="12dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+<!--            <EditText-->
+<!--                android:id="@+id/edPassword"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="16dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginEnd="16dp"-->
+<!--                android:background="@drawable/input_bg_reg"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:ems="10"-->
+<!--                android:hint="Password"-->
+<!--                android:inputType="textPassword"-->
+<!--                android:padding="12dp"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textColor="@color/white"-->
+<!--                android:textColorHint="@color/white"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/txtPassword"-->
+<!--                tools:ignore="TouchTargetSizeCheck" />-->
 
             <Button
                 android:id="@+id/btnUpdateSP"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="60dp"
-                android:text="Register"
+                android:text="Update"
                 app:cornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edPassword"
+                app:layout_constraintTop_toBottomOf="@+id/pass"
                 tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -82,7 +82,7 @@ public class SPRegistrationActivity extends AppCompatActivity {
         String cPassword = binding.edConfirmPassword.getText().toString();
         String businessName = binding.edBusinessName.getText().toString();
         String spID = binding.edID.getText().toString();
-
+        String aadhaarNo = binding.edAadhaar.getText().toString();
 
         if (!email.matches(emailPattern) || email.isEmpty()){
             binding.edEmail.setError("Enter correct email");
@@ -100,52 +100,51 @@ public class SPRegistrationActivity extends AppCompatActivity {
             binding.edPassword.setError("Enter the proper password. Password should be more than 8 characters");
         } else if (!password.equals(cPassword)){
             binding.edConfirmPassword.setError("Password doesn't match");
+        } else if (aadhaarNo.isEmpty()){
+            binding.edAadhaar.setError("PLease enter your aadhaar number");
         } else {
             progressDialog.setTitle("Registration...");
             progressDialog.setMessage("Please wait while your registration is getting done.");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
 
-            auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
-                        progressDialog.dismiss();
+            auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()){
+                    progressDialog.dismiss();
 
-                        HashMap<String, String> hashmap = new HashMap<>();
-                        hashmap.put("userId", auth.getUid());
-                        hashmap.put("userType", "ServiceProvider");
-                        hashmap.put("name", name);
-                        hashmap.put("email", email);
-                        hashmap.put("contactNo", contact);
-                        hashmap.put("address", address);
-                        hashmap.put("password", password);
-                        hashmap.put("businessName", businessName);
-                        hashmap.put("spID", spID);
-                        hashmap.put("active", "ACTIVE");
+                    HashMap<String, String> hashmap = new HashMap<>();
+                    hashmap.put("userId", auth.getUid());
+                    hashmap.put("userType", "ServiceProvider");
+                    hashmap.put("name", name);
+                    hashmap.put("email", email);
+                    hashmap.put("contactNo", contact);
+                    hashmap.put("address", address);
+                    hashmap.put("password", password);
+                    hashmap.put("businessName", businessName);
+                    hashmap.put("spID", spID);
+                    hashmap.put("active", "ACTIVE");
 
-                        //String userEmail = email;
+                    //String userEmail = email;
 
-                        DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Customers");
-                        ref.child(auth.getUid()).setValue(hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                Intent intent = new Intent(SPRegistrationActivity.this, SPDashboard.class);
-                                startActivity(intent);
-                                finishAffinity();
-                                Toast.makeText(SPRegistrationActivity.this, "Customer Registered Successfully.", Toast.LENGTH_SHORT).show();
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d("TAG", "onFailure: "+e.getMessage());
-                                Toast.makeText(SPRegistrationActivity.this, "Registration Failed."+e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    } else {
-                        progressDialog.dismiss();
-                        Toast.makeText(SPRegistrationActivity.this, ""+task.getException(), Toast.LENGTH_SHORT).show();
-                    }
+                    DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Customers");
+                    ref.child(auth.getUid()).setValue(hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Intent intent = new Intent(SPRegistrationActivity.this, SPDashboard.class);
+                            startActivity(intent);
+                            finishAffinity();
+                            Toast.makeText(SPRegistrationActivity.this, "Customer Registered Successfully.", Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("TAG", "onFailure: "+e.getMessage());
+                            Toast.makeText(SPRegistrationActivity.this, "Registration Failed."+e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    progressDialog.dismiss();
+                    Toast.makeText(SPRegistrationActivity.this, ""+task.getException(), Toast.LENGTH_SHORT).show();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override

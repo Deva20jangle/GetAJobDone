@@ -30,7 +30,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,9 +39,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser user;
     FirebaseDatabase database;
     ActionBarDrawerToggle toggle;
-
     serviceAdapter adapter;
-    String bName, sType, sPrice;
 
     private final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
     private final List<serviceModel> serviceModelList = new ArrayList<>();

@@ -6,6 +6,7 @@
 
     <string name="please_provide_service_details">Please provide service \ndetails</string>
     <string name="service_type">Service Type</string>
+    <string name="service_name">Service Name</string>
     <string name="add_your_service">Add your Service</string>
     <string name="service_price">Service Price</string>
     <string name="service_description">Service description</string>

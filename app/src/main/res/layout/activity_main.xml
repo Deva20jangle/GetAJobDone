@@ -113,6 +113,22 @@
                     android:layout_marginRight="5dp"/>
 
                 <TextView
+                    android:id="@+id/txtRatingHL"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rating: High > Low"
+                    android:textColor="@color/black"
+                    android:padding="5dp"
+                    android:layout_margin="5dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/black"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"/>
+
+                <TextView
                     android:id="@+id/txtReset"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -140,7 +156,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/customerRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            tools:ignore="MissingClass" />
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
@@ -149,6 +166,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/customer_menu"/>
+        app:menu="@menu/customer_menu"
+        tools:ignore="MissingClass" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

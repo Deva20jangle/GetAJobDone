@@ -104,7 +104,7 @@
                     android:background="@drawable/input_bg_reg"
                     android:drawablePadding="10dp"
                     android:ems="10"
-                    android:hint="@string/service_type"
+                    android:hint="@string/service_name"
                     android:inputType="textCapSentences"
                     android:padding="12dp"
                     android:textAlignment="center"
