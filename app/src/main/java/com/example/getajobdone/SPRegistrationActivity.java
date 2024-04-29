@@ -21,10 +21,15 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class SPRegistrationActivity extends AppCompatActivity {
 
@@ -34,6 +39,9 @@ public class SPRegistrationActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
     FirebaseDatabase database;
+
+    DatabaseReference ref1 =FirebaseDatabase.getInstance().getReference();
+    List<String> serviceProviderIds = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,27 +54,38 @@ public class SPRegistrationActivity extends AppCompatActivity {
         user = auth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
 
-        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+        binding.btnBack.setOnClickListener(v -> {
+            Intent intent = new Intent(SPRegistrationActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finishAffinity();
+        });
+
+        binding.txtHaveAcc.setOnClickListener(v -> {
+            Intent intent = new Intent(SPRegistrationActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finishAffinity();
+        });
+
+        String id = binding.edID.getText().toString();
+        ref1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SPRegistrationActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finishAffinity();
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot users : snapshot.child("Customers").getChildren()){
+                    String dbSpId = users.child("spID").getValue(String.class);
+                    serviceProviderIds.add(dbSpId);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
-        binding.txtHaveAcc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SPRegistrationActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finishAffinity();
-            }
-        });
-
-        binding.btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        binding.btnRegister.setOnClickListener(v -> {
+            if (serviceProviderIds.contains(binding.edID.getText().toString())){
+                binding.edID.setError("This service provider id is already in use");
+            } else {
                 performAuth();
             }
         });
@@ -124,34 +143,23 @@ public class SPRegistrationActivity extends AppCompatActivity {
                     hashmap.put("spID", spID);
                     hashmap.put("active", "ACTIVE");
 
-                    //String userEmail = email;
-
                     DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Customers");
-                    ref.child(auth.getUid()).setValue(hashmap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Intent intent = new Intent(SPRegistrationActivity.this, SPDashboard.class);
-                            startActivity(intent);
-                            finishAffinity();
-                            Toast.makeText(SPRegistrationActivity.this, "Customer Registered Successfully.", Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d("TAG", "onFailure: "+e.getMessage());
-                            Toast.makeText(SPRegistrationActivity.this, "Registration Failed."+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                    ref.child(auth.getUid()).setValue(hashmap).addOnCompleteListener(task1 -> {
+                        Intent intent = new Intent(SPRegistrationActivity.this, SPDashboard.class);
+                        startActivity(intent);
+                        finishAffinity();
+                        Toast.makeText(SPRegistrationActivity.this, "Customer Registered Successfully.", Toast.LENGTH_SHORT).show();
+                    }).addOnFailureListener(e -> {
+                        Log.d("TAG", "onFailure: "+e.getMessage());
+                        Toast.makeText(SPRegistrationActivity.this, "Registration Failed."+e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
                 } else {
                     progressDialog.dismiss();
                     Toast.makeText(SPRegistrationActivity.this, ""+task.getException(), Toast.LENGTH_SHORT).show();
                 }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    progressDialog.dismiss();
-                    Log.d("TAG", "onFailure: "+e.getMessage());
-                }
+            }).addOnFailureListener(e -> {
+                progressDialog.dismiss();
+                Log.d("TAG", "onFailure: "+e.getMessage());
             });
         }
     }

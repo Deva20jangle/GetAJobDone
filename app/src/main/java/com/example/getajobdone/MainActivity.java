@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
     private final List<serviceModel> serviceModelList = new ArrayList<>();
 
+    List<String> activeSP = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +105,24 @@ public class MainActivity extends AppCompatActivity {
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot users : snapshot.child("Customers").getChildren()){
+                    String userID = users.child("userId").getValue(String.class);
+                    String isActive = users.child("active").getValue(String.class);
+                    if (isActive.equals("ACTIVE")){
+                        activeSP.add(userID);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
                 serviceModelList.clear();
                 for(DataSnapshot services : snapshot.child("Services").getChildren()){
                     final String serviceID = services.child("serviceId").getValue(String.class);
@@ -122,10 +142,12 @@ public class MainActivity extends AppCompatActivity {
                     final String bankIFSCCode = services.child("bankIFSCCode").getValue(String.class);
                     final String bankUPI = services.child("bankUPI").getValue(String.class);
 
-                    serviceModel list = new serviceModel(serviceID, spUid, spName, businessAddress, businessContactNo, businessName, serviceType, servicePrice, serviceDescription, serviceRating, serviceRatingSum, serviceRatingCount, bankAccountHolderName, bankAccountNumber, bankIFSCCode, bankUPI);
-                    serviceModelList.add(list);
-                    Collections.sort(serviceModelList, (s1, s2) -> s1.getServiceRating().compareToIgnoreCase(s2.getServiceRating()));
-                    Collections.reverse(serviceModelList);
+                    if (activeSP.contains(spUid)){
+                        serviceModel list = new serviceModel(serviceID, spUid, spName, businessAddress, businessContactNo, businessName, serviceType, servicePrice, serviceDescription, serviceRating, serviceRatingSum, serviceRatingCount, bankAccountHolderName, bankAccountNumber, bankIFSCCode, bankUPI);
+                        serviceModelList.add(list);
+                        Collections.sort(serviceModelList, (s1, s2) -> s1.getServiceRating().compareToIgnoreCase(s2.getServiceRating()));
+                        Collections.reverse(serviceModelList);
+                    }
                 }
                 adapter = new serviceAdapter(serviceModelList, getBaseContext());
                 binding.customerRecyclerView.setAdapter(adapter);
