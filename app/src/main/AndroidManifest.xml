@@ -15,6 +15,9 @@
         android:theme="@style/Theme.GetAJobDone"
         tools:targetApi="31">
         <activity
+            android:name=".CheckSubscribed"
+            android:exported="false" />
+        <activity
             android:name=".RateUs"
             android:exported="false" />
         <activity

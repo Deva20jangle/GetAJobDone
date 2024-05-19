@@ -101,7 +101,11 @@ public class AdminDashboard extends AppCompatActivity {
                 Intent i = new Intent(AdminDashboard.this, CheckComplaints.class);
                 startActivity(i);
                 binding.drawer.closeDrawer(GravityCompat.START);
-            } else if(itemId == R.id.logoutAdmin){
+            } else if(itemId == R.id.subscriptions){
+                Intent i = new Intent(AdminDashboard.this, CheckSubscribed.class);
+                startActivity(i);
+                binding.drawer.closeDrawer(GravityCompat.START);
+            }else if(itemId == R.id.logoutAdmin){
                 final AlertDialog.Builder builder = new AlertDialog.Builder(AdminDashboard.this);
                 builder.setMessage("Do you want to logout?");
                 builder.setPositiveButton("Yes", (dialog, which) -> {

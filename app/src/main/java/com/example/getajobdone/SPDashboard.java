@@ -1,5 +1,6 @@
 package com.example.getajobdone;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +31,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class SPDashboard extends AppCompatActivity {
 
@@ -42,8 +45,10 @@ public class SPDashboard extends AppCompatActivity {
 
     ordersAdapter adapter;
     String serviceId, serviceType, servicePrice, serviceDesc, businessName, SPContactNo, spUid, address, spName, orderId, customerUid, customerName, customerContact, orderStatus, orderDesc, date, orderStatusDesc;
+    String businessName1, active, email;
     String [] dropDown = {"Select Status", "New", "In Progress", "Rejected", "Completed"};
     ArrayAdapter<String> adapterItems;
+    ProgressDialog progressDialog;
 
     private final DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
     private final List<orderModel> orderModelList = new ArrayList<>();
@@ -56,6 +61,7 @@ public class SPDashboard extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
+        progressDialog = new ProgressDialog(this);
         auth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
         database = FirebaseDatabase.getInstance();
@@ -141,6 +147,21 @@ public class SPDashboard extends AppCompatActivity {
                 }
                 adapter = new ordersAdapter(orderModelList, getBaseContext());
                 binding.spRecyclerView.setAdapter(adapter);
+
+                for(DataSnapshot customer : snapshot.child("Customers").getChildren()){
+
+                    Log.d("TAG", "onCreate: Subscriptions userId:: " + customer.child("userId"));
+                    Log.d("TAG", "onCreate: Subscriptions user.getUid():: " + user.getUid());
+
+                    if (Objects.equals(customer.child("userId").getValue(String.class), user.getUid())){
+                        businessName1 = customer.child("businessName").getValue(String.class);
+                        active = customer.child("active").getValue(String.class);
+                        email = customer.child("email").getValue(String.class);
+
+                        Log.d("TAG", "onCreate: Subscriptions businessName1:: " + businessName1);
+                    }
+                }
+
             }
 
             @Override
@@ -159,6 +180,35 @@ public class SPDashboard extends AppCompatActivity {
             } else if(itemId == R.id.settingsSP){
                 Intent i = new Intent(SPDashboard.this, UpdateServiceProvider.class);
                 startActivity(i);
+                binding.drawer.closeDrawer(GravityCompat.START);
+            } else if(itemId == R.id.subscribe){
+                final AlertDialog.Builder builder = new AlertDialog.Builder(SPDashboard.this);
+                builder.setTitle("Subscribe");
+                builder.setMessage("Are you sure to tale GetAJobDone subscription.");
+                builder.setPositiveButton("Yes", (dialog, which) -> {
+
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Subscriptions");
+                    String timestamp = "" + System.currentTimeMillis();
+
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("userId", "" + user.getUid());
+                    hashMap.put("businessName", "" + businessName);
+                    hashMap.put("active", "" + active);
+                    hashMap.put("email", "" + email);
+
+                    Log.d("TAG", "onCreate: Subscriptions hashmap:: " + hashMap);
+
+                    ref.child(user.getUid()).setValue(hashMap).addOnSuccessListener(unused -> {
+                        Toast.makeText(SPDashboard.this, "You have successfully subscribed.", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                    }).addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(SPDashboard.this, "Failed to subscribe. Please try again or contact to admin.", Toast.LENGTH_SHORT).show();
+                    });
+                });
+                builder.setNegativeButton("No", (dialog, which) -> dialog.cancel());
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
                 binding.drawer.closeDrawer(GravityCompat.START);
             } else if(itemId == R.id.logoutSP){
                 final AlertDialog.Builder builder = new AlertDialog.Builder(SPDashboard.this);

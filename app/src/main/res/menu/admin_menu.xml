@@ -6,6 +6,10 @@
         android:iconTint="@color/colorPrimary"
         android:title="Check complaints"/>
 
+    <item android:id="@+id/subscriptions"
+        android:icon="@drawable/subscribe"
+        android:title="Subscribed users"/>
+
     <item android:id="@+id/logoutAdmin"
         android:icon="@drawable/ic_logout"
         android:iconTint="@color/colorPrimary"
