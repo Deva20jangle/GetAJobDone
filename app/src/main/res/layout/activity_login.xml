@@ -330,7 +330,7 @@
         android:background="#8B000000"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Admin Contact detials: +91 9309152950"
+        android:text="Admin Contact details: +91 9309152950"
         android:textColor="@color/white"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@+id/linearLayout"

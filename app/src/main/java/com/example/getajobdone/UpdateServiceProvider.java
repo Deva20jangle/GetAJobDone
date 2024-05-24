@@ -30,7 +30,7 @@ public class UpdateServiceProvider extends AppCompatActivity {
     FirebaseUser user;
     FirebaseDatabase database;
 
-    String name, email, spID, businessName, contactNo, address, password;
+    String name, email, spID, businessName, contactNo, address, password, active;
     String updatedName, updatedEmail, updatedId, updatedBusinessName, updatedContact, updatedAddress, updatedPassword;
 
     @Override
@@ -53,6 +53,7 @@ public class UpdateServiceProvider extends AppCompatActivity {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    active = snapshot.child("active").getValue(String.class);
                     name = snapshot.child("name").getValue(String.class);
                     email = snapshot.child("email").getValue(String.class);
                     spID = snapshot.child("spID").getValue(String.class);
@@ -79,6 +80,7 @@ public class UpdateServiceProvider extends AppCompatActivity {
                         updatedBusinessName = binding.edBusinessName.getText().toString();
 
                         HashMap<String, String> hashmap = new HashMap<>();
+                        hashmap.put("active", active);
                         hashmap.put("userId", auth.getUid());
                         hashmap.put("userType", "ServiceProvider");
                         hashmap.put("name", updatedName);

@@ -146,6 +146,36 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Business Name:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/txtBusinessNameOrderDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="business name goes here"
+                android:padding="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Service Provider Name:"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:id="@+id/txtSPNameOrderDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="service provider name goes here"
+                android:padding="1dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Service Type:"
                 android:textSize="16sp"
                 android:textStyle="bold"

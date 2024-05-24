@@ -31,7 +31,7 @@ public class UpdateCustomer extends AppCompatActivity {
     FirebaseUser user;
     FirebaseDatabase database;
 
-    String name, email, contactNo, address, password;
+    String name, email, contactNo, address, password, active;
     String updatedName, updatedEmail, updatedContact, updatedAddress, updatedPassword;
 
     @Override
@@ -54,6 +54,7 @@ public class UpdateCustomer extends AppCompatActivity {
             ref.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    active = snapshot.child("active").getValue(String.class);
                     name = snapshot.child("name").getValue(String.class);
                     email = snapshot.child("email").getValue(String.class);
                     contactNo = snapshot.child("contactNo").getValue(String.class);
@@ -74,6 +75,7 @@ public class UpdateCustomer extends AppCompatActivity {
                         updatedPassword = binding.edPassword.getText().toString();
 
                         HashMap<String, String> hashmap = new HashMap<>();
+                        hashmap.put("active", active);
                         hashmap.put("userId", auth.getUid());
                         hashmap.put("userType", "Customer");
                         hashmap.put("name", updatedName);
@@ -81,7 +83,6 @@ public class UpdateCustomer extends AppCompatActivity {
                         hashmap.put("contactNo", updatedContact);
                         hashmap.put("address", updatedAddress);
                         hashmap.put("password", updatedPassword);
-                        hashmap.put("active", "YES");
 
                         ref.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override

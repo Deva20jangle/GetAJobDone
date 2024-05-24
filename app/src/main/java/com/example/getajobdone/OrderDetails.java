@@ -73,6 +73,8 @@ public class OrderDetails extends AppCompatActivity {
         binding.txtServiceTypeOrderDetails.setText(serviceType);
         binding.txtOrderStatusOrderDetails.setText(orderStatus);
         binding.txtOrderDescOrderDetails.setText(orderDesc);
+        binding.txtSPNameOrderDetails.setText(spName);
+        binding.txtBusinessNameOrderDetails.setText(businessName);
 
         binding.btnBack.setOnClickListener(view -> {
             finish();
