@@ -1,5 +1,7 @@
 <resources>
-    <string name="app_name">GetAJobDone</string>
+    <string name="app_name">MoveWithMe</string>
+
+    <string name="map_key" translatable="false">AIzaSyAfJCDYO5r_qBIHzLoaJZ77oe3CoLPRV7k</string>
 
     <string name="open">Open</string>
     <string name="close">Close</string>

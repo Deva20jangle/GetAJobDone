@@ -2,6 +2,21 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item android:id="@+id/myToDOList"
+        android:icon="@drawable/ic_todo"
+        android:iconTint="@color/colorPrimary"
+        android:title="My ToDo List"/>
+
+    <item android:id="@+id/checkProducts"
+        android:icon="@drawable/product"
+        android:iconTint="@color/colorPrimary"
+        android:title="Check products"/>
+
+    <item android:id="@+id/myProductOrders"
+        android:icon="@drawable/ic_orders"
+        android:iconTint="@color/colorPrimary"
+        android:title="My Product orders"/>
+
     <item android:id="@+id/orderedServices"
         android:icon="@drawable/checkorders"
         android:iconTint="@color/colorPrimary"

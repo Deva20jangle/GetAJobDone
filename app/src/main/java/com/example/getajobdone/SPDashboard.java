@@ -177,6 +177,14 @@ public class SPDashboard extends AppCompatActivity {
                 Intent i = new Intent(SPDashboard.this, AddService.class);
                 startActivity(i);
                 binding.drawer.closeDrawer(GravityCompat.START);
+            } else if(itemId == R.id.addProduct){
+                Intent i = new Intent(SPDashboard.this, AddProduct.class);
+                startActivity(i);
+                binding.drawer.closeDrawer(GravityCompat.START);
+            } else if(itemId == R.id.productOrders){
+                Intent i = new Intent(SPDashboard.this, ProductOrders.class);
+                startActivity(i);
+                binding.drawer.closeDrawer(GravityCompat.START);
             } else if(itemId == R.id.settingsSP){
                 Intent i = new Intent(SPDashboard.this, UpdateServiceProvider.class);
                 startActivity(i);

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,7 +13,7 @@
         android:padding="15dp">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtBusinessNameRow"
             android:text="@string/this_is_business_name"
@@ -25,7 +24,7 @@
             android:layout_marginStart="10dp"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/txtServiceTypeRow"
             android:text="@string/this_is_service_type"
@@ -65,7 +64,14 @@
 
         </LinearLayout>
 
-
+        <Button
+            android:id="@+id/btnAddToTodo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add to ToDo"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="5dp"/>
 
     </RelativeLayout>
 

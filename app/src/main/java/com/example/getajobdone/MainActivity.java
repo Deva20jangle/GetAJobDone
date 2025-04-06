@@ -177,7 +177,19 @@ public class MainActivity extends AppCompatActivity {
         binding.navMenu.setNavigationItemSelectedListener(item -> {
             int itemId = item.getItemId();
 
-            if(itemId == R.id.orderedServices){
+            if(itemId == R.id.myToDOList){
+                Intent i = new Intent(MainActivity.this, TodoListActivity.class);
+                startActivity(i);
+                binding.drawer.closeDrawer(GravityCompat.START);
+            } else if(itemId == R.id.checkProducts){
+                Intent i = new Intent(MainActivity.this, ShowProducts.class);
+                startActivity(i);
+                binding.drawer.closeDrawer(GravityCompat.START);
+            } else if(itemId == R.id.myProductOrders){
+                Intent i = new Intent(MainActivity.this, MyProductOrders.class);
+                startActivity(i);
+                binding.drawer.closeDrawer(GravityCompat.START);
+            } else if(itemId == R.id.orderedServices){
                 Toast.makeText(MainActivity.this, "Ordered Services", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(MainActivity.this, MyOrders.class);
                 startActivity(i);
@@ -186,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, SubmitComplaint.class);
                 startActivity(i);
                 binding.drawer.closeDrawer(GravityCompat.START);
-            } else if(itemId == R.id.settingsCustomer){
+            } else  if(itemId == R.id.settingsCustomer){
                 Intent i = new Intent(MainActivity.this, UpdateCustomer.class);
                 startActivity(i);
                 binding.drawer.closeDrawer(GravityCompat.START);

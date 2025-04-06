@@ -6,6 +6,16 @@
         android:iconTint="@color/colorPrimary"
         android:title="Add Service"/>
 
+    <item android:id="@+id/addProduct"
+        android:icon="@drawable/product"
+        android:iconTint="@color/colorPrimary"
+        android:title="Add Product"/>
+
+    <item android:id="@+id/productOrders"
+        android:icon="@drawable/ic_orders"
+        android:iconTint="@color/colorPrimary"
+        android:title="ProductOrders"/>
+
     <item android:id="@+id/blank"
         android:title=" "/>
 

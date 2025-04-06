@@ -1,22 +1,25 @@
 package com.example.getajobdone;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.getajobdone.databinding.ActivitySpregistrationBinding;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class SPRegistrationActivity extends AppCompatActivity {
 
@@ -39,8 +43,9 @@ public class SPRegistrationActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseUser user;
     FirebaseDatabase database;
+    FusedLocationProviderClient fusedLocationClient;
 
-    DatabaseReference ref1 =FirebaseDatabase.getInstance().getReference();
+    DatabaseReference ref1 = FirebaseDatabase.getInstance().getReference();
     List<String> serviceProviderIds = new ArrayList<>();
 
     @Override
@@ -53,6 +58,7 @@ public class SPRegistrationActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         database = FirebaseDatabase.getInstance();
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         binding.btnBack.setOnClickListener(v -> {
             Intent intent = new Intent(SPRegistrationActivity.this, LoginActivity.class);
@@ -66,11 +72,10 @@ public class SPRegistrationActivity extends AppCompatActivity {
             finishAffinity();
         });
 
-        String id = binding.edID.getText().toString();
         ref1.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot users : snapshot.child("Customers").getChildren()){
+                for (DataSnapshot users : snapshot.child("Customers").getChildren()) {
                     String dbSpId = users.child("spID").getValue(String.class);
                     serviceProviderIds.add(dbSpId);
                 }
@@ -83,16 +88,15 @@ public class SPRegistrationActivity extends AppCompatActivity {
         });
 
         binding.btnRegister.setOnClickListener(v -> {
-            if (serviceProviderIds.contains(binding.edID.getText().toString())){
+            if (serviceProviderIds.contains(binding.edID.getText().toString())) {
                 binding.edID.setError("This service provider id is already in use");
             } else {
                 performAuth();
             }
         });
-
     }
-    private void performAuth() {
 
+    private void performAuth() {
         String name = binding.edName.getText().toString();
         String email = binding.edEmail.getText().toString();
         String contact = binding.edContactNo.getText().toString();
@@ -103,64 +107,96 @@ public class SPRegistrationActivity extends AppCompatActivity {
         String spID = binding.edID.getText().toString();
         String aadhaarNo = binding.edAadhaar.getText().toString();
 
-        if (!email.matches(emailPattern) || email.isEmpty()){
+        if (!email.matches(emailPattern) || email.isEmpty()) {
             binding.edEmail.setError("Enter correct email");
-        } else if(name.isEmpty()){
+        } else if (name.isEmpty()) {
             binding.edName.setError("Enter your name");
-        } else if(contact.isEmpty()){
+        } else if (contact.isEmpty()) {
             binding.edContactNo.setError("Enter your contact number");
-        } else if(address.isEmpty()){
+        } else if (address.isEmpty()) {
             binding.edAddress.setError("Enter your address");
-        } else  if(businessName.isEmpty()){
+        } else if (businessName.isEmpty()) {
             binding.edAddress.setError("Enter your business name");
-        } else if(spID.isEmpty()){
+        } else if (spID.isEmpty()) {
             binding.edAddress.setError("Enter your ID");
-        } else if (password.isEmpty() || password.length() < 8){
+        } else if (password.isEmpty() || password.length() < 8) {
             binding.edPassword.setError("Enter the proper password. Password should be more than 8 characters");
-        } else if (!password.equals(cPassword)){
+        } else if (!password.equals(cPassword)) {
             binding.edConfirmPassword.setError("Password doesn't match");
-        } else if (aadhaarNo.isEmpty()){
-            binding.edAadhaar.setError("PLease enter your aadhaar number");
+        } else if (aadhaarNo.isEmpty()) {
+            binding.edAadhaar.setError("Please enter your aadhaar number");
         } else {
             progressDialog.setTitle("Registration...");
             progressDialog.setMessage("Please wait while your registration is getting done.");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
 
-            auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
-                if (task.isSuccessful()){
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
                     progressDialog.dismiss();
-
-                    HashMap<String, String> hashmap = new HashMap<>();
-                    hashmap.put("userId", auth.getUid());
-                    hashmap.put("userType", "ServiceProvider");
-                    hashmap.put("name", name);
-                    hashmap.put("email", email);
-                    hashmap.put("contactNo", contact);
-                    hashmap.put("address", address);
-                    hashmap.put("password", password);
-                    hashmap.put("businessName", businessName);
-                    hashmap.put("spID", spID);
-                    hashmap.put("active", "ACTIVE");
-
-                    DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Customers");
-                    ref.child(auth.getUid()).setValue(hashmap).addOnCompleteListener(task1 -> {
-                        Intent intent = new Intent(SPRegistrationActivity.this, SPDashboard.class);
-                        startActivity(intent);
-                        finishAffinity();
-                        Toast.makeText(SPRegistrationActivity.this, "Customer Registered Successfully.", Toast.LENGTH_SHORT).show();
-                    }).addOnFailureListener(e -> {
-                        Log.d("TAG", "onFailure: "+e.getMessage());
-                        Toast.makeText(SPRegistrationActivity.this, "Registration Failed."+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
+                    getCurrentLocation(name, email, contact, address, password, businessName, spID, aadhaarNo);
                 } else {
                     progressDialog.dismiss();
-                    Toast.makeText(SPRegistrationActivity.this, ""+task.getException(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SPRegistrationActivity.this, "" + task.getException(), Toast.LENGTH_SHORT).show();
                 }
             }).addOnFailureListener(e -> {
                 progressDialog.dismiss();
-                Log.d("TAG", "onFailure: "+e.getMessage());
+                Log.d("TAG", "onFailure: " + e.getMessage());
             });
+        }
+    }
+
+    private void getCurrentLocation(String name, String email, String contact, String address, String password, String businessName, String spID, String aadhaarNo) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        } else {
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            if (location != null) {
+                                double latitude = location.getLatitude();
+                                double longitude = location.getLongitude();
+
+                                // Save location and other details to database
+                                HashMap<String, Object> hashmap = new HashMap<>();
+                                hashmap.put("userId", auth.getUid());
+                                hashmap.put("userType", "ServiceProvider");
+                                hashmap.put("name", name);
+                                hashmap.put("email", email);
+                                hashmap.put("contactNo", contact);
+                                hashmap.put("address", address);
+                                hashmap.put("password", password);
+                                hashmap.put("businessName", businessName);
+                                hashmap.put("spID", spID);
+                                hashmap.put("aadhaarNo", aadhaarNo);
+                                hashmap.put("latitude", latitude);
+                                hashmap.put("longitude", longitude);
+                                hashmap.put("active", "ACTIVE");
+
+                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Customers");
+                                ref.child(Objects.requireNonNull(auth.getUid())).setValue(hashmap).addOnCompleteListener(task -> {
+                                    Intent intent = new Intent(SPRegistrationActivity.this, SPDashboard.class);
+                                    startActivity(intent);
+                                    finishAffinity();
+                                    Toast.makeText(SPRegistrationActivity.this, "Customer Registered Successfully.", Toast.LENGTH_SHORT).show();
+                                }).addOnFailureListener(e -> {
+                                    Log.d("TAG", "onFailure: " + e.getMessage());
+                                    Toast.makeText(SPRegistrationActivity.this, "Registration Failed." + e.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
+                            }
+                        }
+                    });
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                performAuth();
+            }
         }
     }
 }
