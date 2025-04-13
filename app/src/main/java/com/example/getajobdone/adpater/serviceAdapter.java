@@ -122,15 +122,30 @@ public class serviceAdapter extends RecyclerView.Adapter<serviceAdapter.MyViewHo
         @Override
         protected FilterResults performFiltering(CharSequence keyword) {
             ArrayList<serviceModel> filteredData = new ArrayList<>();
-            if (keyword.toString().isEmpty())
+
+            if (keyword.toString().isEmpty()) {
                 filteredData.addAll(backupList);
-            else{
-                for (serviceModel model : backupList){
-                        if (model.getServiceType().toString().toLowerCase().contains(keyword.toString().toLowerCase())){
-                            filteredData.add(model);
+            } else {
+                String[] searchKeywords = keyword.toString().toLowerCase().split("\\s+");
+
+                for (serviceModel model : backupList) {
+                    String serviceType = model.getServiceType().toLowerCase();
+                    String businessAddress = model.getBusinessAddress().toLowerCase();
+
+                    boolean matchesAll = true;
+                    for (String key : searchKeywords) {
+                        if (!(serviceType.contains(key) || businessAddress.contains(key))) {
+                            matchesAll = false;
+                            break;
+                        }
+                    }
+
+                    if (matchesAll) {
+                        filteredData.add(model);
                     }
                 }
             }
+
             FilterResults results = new FilterResults();
             results.values = filteredData;
             return results;
@@ -139,10 +154,39 @@ public class serviceAdapter extends RecyclerView.Adapter<serviceAdapter.MyViewHo
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
             serviceModelList.clear();
-            serviceModelList.addAll((ArrayList<serviceModel>)filterResults.values);
+            serviceModelList.addAll((ArrayList<serviceModel>) filterResults.values);
             notifyDataSetChanged();
         }
     };
+
+//    Filter filter = new Filter() {
+//        @Override
+//        protected FilterResults performFiltering(CharSequence keyword) {
+//            ArrayList<serviceModel> filteredData = new ArrayList<>();
+//            if (keyword.toString().isEmpty())
+//                filteredData.addAll(backupList);
+//            else{
+//                for (serviceModel model : backupList){
+//                    if (model.getBusinessAddress().toString().toLowerCase().contains(keyword.toString().toLowerCase())){
+//                        filteredData.add(model);
+////                        if (model.getServiceType().toString().toLowerCase().contains(keyword.toString().toLowerCase())){
+////                            filteredData.add(model);
+//
+//                    }
+//                }
+//            }
+//            FilterResults results = new FilterResults();
+//            results.values = filteredData;
+//            return results;
+//        }
+//
+//        @Override
+//        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+//            serviceModelList.clear();
+//            serviceModelList.addAll((ArrayList<serviceModel>)filterResults.values);
+//            notifyDataSetChanged();
+//        }
+//    };
 
     static class MyViewHolder extends RecyclerView.ViewHolder{
         private final TextView txtBusinessNameRow, txtServiceTypeRow, txtServicePriceRow, txtRating;

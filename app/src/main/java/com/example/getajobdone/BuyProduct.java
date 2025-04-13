@@ -44,6 +44,10 @@ public class BuyProduct extends AppCompatActivity {
         binding.txtProductPrice.setText(productPrice);
         Glide.with(this).load(productImage).into(binding.imgProduct);
 
+        binding.btnBack.setOnClickListener(view -> {
+            finish();
+        });
+
         binding.btnOrderProduct.setOnClickListener(view -> {
             String customerAddress = binding.edCustomerAddress.getText().toString();
             if (customerAddress.isEmpty()) {

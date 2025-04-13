@@ -148,7 +148,7 @@
             android:layout_margin="8dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/input_bg"
-            android:queryHint="Search Service"
+            android:queryHint="Search by service or address"
             android:focusedByDefault="false"
             android:inputType="textCapSentences"
             android:iconifiedByDefault="false"/>

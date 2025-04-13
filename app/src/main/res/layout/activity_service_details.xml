@@ -193,15 +193,31 @@
                 app:layout_constraintTop_toBottomOf="@+id/edServicePrice"
                 tools:ignore="Autofill,TouchTargetSizeCheck" />
 
-            <Button
-                android:id="@+id/btnHireService"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="HIRE"
-                android:layout_gravity="end"
-                android:layout_marginEnd="25dp"
                 android:layout_marginTop="25dp"
-                android:textColor="@color/white"/>
+                android:layout_marginEnd="15dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnShowProducts"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Products"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/btnHireService"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="HIRE"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

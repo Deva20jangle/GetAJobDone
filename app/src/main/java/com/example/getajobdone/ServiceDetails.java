@@ -70,6 +70,12 @@ public class ServiceDetails extends AppCompatActivity {
         DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Customers").child(Objects.requireNonNull(auth.getUid()));
         DatabaseReference ref1 =FirebaseDatabase.getInstance().getReference("Orders");
 
+        binding.btnShowProducts.setOnClickListener(view -> {
+            Intent in = new Intent(ServiceDetails.this, ShowProducts.class);
+            in.putExtra("spUid", spUid);
+            startActivity(in);
+        });
+
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

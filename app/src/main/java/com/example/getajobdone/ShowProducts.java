@@ -1,5 +1,6 @@
 package com.example.getajobdone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -41,14 +42,13 @@ public class ShowProducts extends AppCompatActivity {
         productAdapter = new ProductAdapter(this, productList);
         recyclerView.setAdapter(productAdapter);
 
+        Intent intent = getIntent();
+        String spId = intent.getStringExtra("spUid");
+
         binding.btnBack.setOnClickListener(view -> {
             finish();
         });
 
-        fetchProducts();
-    }
-
-    private void fetchProducts() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Products");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -56,7 +56,10 @@ public class ShowProducts extends AppCompatActivity {
                 productList.clear();
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     Product product = ds.getValue(Product.class);
-                    productList.add(product);
+                    if (product != null && product.getSpId().equals(spId)) {
+                        productList.add(product);
+                    }
+//                    productList.add(product);
                 }
                 productAdapter.notifyDataSetChanged();
             }

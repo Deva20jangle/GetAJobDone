@@ -7,11 +7,6 @@
         android:iconTint="@color/colorPrimary"
         android:title="My ToDo List"/>
 
-    <item android:id="@+id/checkProducts"
-        android:icon="@drawable/product"
-        android:iconTint="@color/colorPrimary"
-        android:title="Check products"/>
-
     <item android:id="@+id/myProductOrders"
         android:icon="@drawable/ic_orders"
         android:iconTint="@color/colorPrimary"

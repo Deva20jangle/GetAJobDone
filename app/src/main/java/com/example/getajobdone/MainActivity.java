@@ -181,10 +181,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(MainActivity.this, TodoListActivity.class);
                 startActivity(i);
                 binding.drawer.closeDrawer(GravityCompat.START);
-            } else if(itemId == R.id.checkProducts){
-                Intent i = new Intent(MainActivity.this, ShowProducts.class);
-                startActivity(i);
-                binding.drawer.closeDrawer(GravityCompat.START);
             } else if(itemId == R.id.myProductOrders){
                 Intent i = new Intent(MainActivity.this, MyProductOrders.class);
                 startActivity(i);
